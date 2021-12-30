@@ -1,0 +1,127 @@
+= GitLab-API
+
+IMPORTANT: ALPHA RELEASE AHEAD, works in progress ⏳
+
+'''
+
+Some useful API for gitlab. Create and delete a project. Javascript ESM module and shell application.
+
+NOTE: Javascript ESM module.
+
+'''
+
+== Index of Contents
+
+* <<Installation, Installation>>
+
+* <<Shell Usage, Shell usage>>
+
+** <<create_shell, Create a project with shell.>>
+** <<delete_shell, Delete a project with shell.>>
+** <<config_shell, Save access token to global config file with shell.>>
+
+* <<Functions &amp; Examples, Functions &amp; Examples>>
+
+** <<create, Create a project.>>
+** <<delete, Delete a project.>>
+** <<config, Save access token to global config file.>>
+
+'''
+
+=== Installation
+
+* Install it as a global package.
+[source,shell]
+----
+npm i -g gla
+
+----
+
+* Install it as a devDependency module for your project.
+[source,shell]
+----
+npm i -D gla
+
+----
+
+* Install it as a dependency module for your project.
+[source,shell]
+----
+npm i gla
+
+----
+
+'''
+
+NOTE: saving the token access to the config file will avoid the use of the token flag for both, shell and module. It creates a folder in the home directory `/HOME_DIR/.gla`, and it saves the file `config.json` inside it
+
+=== Shell Usage
+
+* [[create_shell]] Create a project.
+
+[source, bash]
+gla create PROJECT_NAME visibility public token YOUR_ACCESS_TOKEN
+
+'''
+
+* [[delete_shell]] Delete a project.
+
+[source, bash]
+gla delet PROJECT_ID token YOUR_ACCESS_TOKEN
+
+'''
+
+* [[config_shell]] Save access token to global config file.
+
+[source, bash]
+gla config global token YOUR_ACCESS_TOKEN
+
+'''
+
+=== Functions &amp; Examples
+
+* [[create]] Create a project.
+
+[source,js]
+----
+import { gla } from 'gla'
+
+const response = await gla(
+    [ 'create', 'test', 'visibility', 'public', 'token', 'YOUR_ACCESS_TOKEN' ],
+    true/*silence the std output when using gla as a dev | dependency in your project*/
+)
+console.log(response)
+
+----
+
+'''
+
+* [[delete]] Delete a project.
+
+[source,js]
+----
+import { gla } from 'gla'
+
+const response = gla(
+    [ 'delete', 'PROJECT_ID', 'token', 'YOUR_ACCESS_TOKEN' ],
+    true/*silence the std output when using gla as a dev | dependency in your project*/
+)
+console.log(response)
+
+----
+
+'''
+
+* [[config]] Save access token to global config file.
+
+[source,js]
+----
+import { gla } from 'gla'
+
+const response = gla(
+    [ 'config', 'global', 'token', 'YOUR_ACCESS_TOKEN' ],
+    true/*silence the std output when using gla as a dev | dependency in your project*/
+)
+console.log(response)
+
+----
