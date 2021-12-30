@@ -5,3 +5,4 @@ package-lock.json
 assertions
 .eslintrc.json
 .eslintignore
+README.adoc
