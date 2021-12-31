@@ -2,7 +2,7 @@ console.time( 'assertions finished ' )
 import { EventEmitter } from 'events'
 import { gla } from '../index.js'
 import { ok } from 'assert/strict'
-import { parse } from '@simonedelpopolo/json-parse'
+import { parse } from 'json-swiss-knife'
 
 const AssertionEvent = new EventEmitter()
 
