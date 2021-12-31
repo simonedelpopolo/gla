@@ -1,36 +1,36 @@
-= GitLab-API
+# GitLab-API
 
-IMPORTANT: ALPHA RELEASE AHEAD, works in progress ⏳
+> ℹ️ ALPHA RELEASE AHEAD, works in progress ⏳
 
-'''
+___
 
 Some useful API for gitlab. Create and delete a project. Javascript ESM module and shell application.
 
-NOTE: Javascript ESM module.
+> ℹ️ Javascript ESM module.
 
-'''
+___
 
-== Index of Contents
+## Index of Contents
 
-* <<Installation, Installation>>
+- [Installation](#installation)
 
-* <<Shell Usage, Shell usage>>
+- [Shell Usage](#shell-usage)
 
-** <<create_shell, Create a project with shell.>>
-** <<delete_shell, Delete a project with shell.>>
-** <<config_shell, Save access token to global config file with shell.>>
+  - [Create a project with shell](#create-a-project-with-shell)
+  - <<delete_shell, Delete a project with shell.>>
+  - <<config_shell, Save access token to global config file with shell.>>
 
-* <<Functions &amp; Examples, Functions &amp; Examples>>
+- <<Functions &amp; Examples, Functions &amp; Examples>>
 
-** <<create, Create a project.>>
-** <<delete, Delete a project.>>
-** <<config, Save access token to global config file.>>
+  - <<create, Create a project.>>
+  - <<delete, Delete a project.>>
+  - <<config, Save access token to global config file.>>
 
-'''
+___
 
-=== Installation
+### Installation
 
-* Install it as a global package.
+- Install it as a global package.
 [source,shell]
 ----
 npm i -g gla
