@@ -48,7 +48,7 @@ npm i gla
 
 ___
 
-> ℹ️ Saving the access token to global config file, will turn of the use of the `token` flag for both, shell and module.  
+> ℹ️ Saving the access token to global config file, will turn off the use of the `token` flag for both, shell and module.  
 > ℹ️ It makes a folder in the home directory `/HOME_DIR/.gla`, and it saves the file `config.json` inside it.
 
 ### Shell Usage
