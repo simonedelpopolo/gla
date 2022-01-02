@@ -1,6 +1,6 @@
 {
   "name": "gla",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Some useful API for gitlab. Create and delete a project. Javascript ESM module.",
   "type": "module",
   "engines": {
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "oftypes": "^0.2.2",
-    "json-swiss-knife": "^1.4.1"
+    "json-swiss-knife": "^1.4.3"
   },
   "devDependencies": {
     "eslint": "^8.4.1",
