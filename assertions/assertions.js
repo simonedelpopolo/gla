@@ -74,7 +74,7 @@ const Assertions = {
             '0' : ( ) => {
                 console.log( '    \x1b[31m executing gla config global', 0, '\x1b[0m\n' )
                 
-                const response = gla( [ 'config', 'global', 'token', 'X' ], true )
+                const response = gla( [ 'config', 'global', 'token', 'YOUR_ACCESS_TOKEN' ], true )
                 
                 ok( typeof response === 'object' )
                 
@@ -87,6 +87,36 @@ const Assertions = {
         console.log( '---------------------------------------------------------------------------' )
         const response0 = await Assertions.assertion1.statement[ '0' ]()
         console.log( Assertions.assertion1.statement[ '0' ].message )
+        console.log( 'returned response -> ', await parse( response0 ) )
+        
+    },
+    
+    assertion2 : async (  ) => {
+        
+        console.log( '__________________________________________________________________________' )
+        
+        console.log( '\x1b[31m Assertion get all projects', 1, '\x1b[0m' )
+        console.log( '    \x1b[31m get all projects', 0, '\x1b[0m' )
+        
+        Assertions.assertion2.statement = {
+            
+            '0' : ( ) => {
+                console.log( '    \x1b[31m executing gla get projects', 0, '\x1b[0m\n' )
+                
+                const response = gla( [ 'get', 'projects', 'token', 'YOUR_ACCESS_TOKEN' ], true )
+                
+                console.log( response )
+                ok( typeof response === 'object' )
+                
+                Assertions.assertion2.statement[ '0' ].message = 'test concluded'
+                
+                return response
+            },
+        }
+        
+        console.log( '---------------------------------------------------------------------------' )
+        const response0 = await Assertions.assertion2.statement[ '0' ]()
+        console.log( Assertions.assertion2.statement[ '0' ].message )
         console.log( 'returned response -> ', await parse( response0 ) )
         
     },

@@ -4,7 +4,7 @@
 
 ___
 
-Some useful API for gitlab. Create and delete a project. Javascript ESM module and shell application.
+Some useful API for gitlab. Create, delete and list all ( owned ) projects. Javascript ESM module.
 
 > ℹ️ Javascript ESM module.
 
@@ -18,6 +18,7 @@ ___
 
   - [Create a project with shell](#create-a-project-with-shell)
   - [Delete a project with shell](#delete-a-project-with-shell)
+  - [List all projects with shell](#list-all-projects-with-shell)
   - [Save access token to global config file with shell](#save-access-token-to-global-config-file-with-shell)
 
 - [Functions &amp; Examples](#)
@@ -69,6 +70,14 @@ gla delete PROJECT_ID token YOUR_ACCESS_TOKEN
 
 ___
 
+- #### List all projects with shell
+
+```shell
+gla get projects token YOUR_ACCESS_TOKEN
+```
+
+___
+
 - #### Save access token to global config file with shell
 
 ```shell
@@ -103,6 +112,31 @@ const response = gla(
     true // silence the std output when using gla as a devDependency|dependency in your project
 )
 console.log(response)
+```
+
+___
+
+
+- #### List all projects
+
+```javascript
+import { gla } from 'gla'
+
+const response = gla(
+    [ 'get', 'projects', 'token', 'YOUR_ACCESS_TOKEN' ],
+    true // silence the std output when using gla as a devDependency|dependency in your project
+)
+console.log(response)
+
+/**
+ * It returns an object with these values
+ * {
+ *      'PROJECT_ID': {
+ *          name: 'PROJECT_NAME',
+ *          description: 'PROJECT_DESCRIPTION'
+ *      },
+ * }
+ */
 ```
 
 ___

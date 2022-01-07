@@ -9,6 +9,7 @@ const gla_commands__ = [
     'create',
     'delete',
     'config',
+    'get',
 ]
 
 const gitlab_api__ = {
@@ -80,6 +81,39 @@ const gitlab_api__ = {
         
         return gitlab_api__.req( options, data )
         
+    },
+    
+    /**
+     * GitLab REST API, list all projects.
+     *
+     * @see https://docs.gitlab.com/ee/api/projects.html#list-all-projects
+     * @param {{token:string= }} data - Provide your access token for the repository to be deleted.
+     * @returns {Promise<string>}
+     */
+    get: async ( data ) => {
+        if ( gitlab_api__.TOKEN === null )
+            gitlab_api__.TOKEN = data.token
+    
+        const options = {
+            method: 'GET',
+            hostname: 'gitlab.com',
+            path: '/api/v4/projects/?owned=true&simple=true',
+            headers: {
+                'Authorization': `Bearer ${ gitlab_api__.TOKEN }`,
+            },
+        }
+        
+        const projects = await parse( await gitlab_api__.req( options, data ) )
+        
+        let projectsResponse = {}
+        for ( const id in projects ) {
+            projectsResponse[ projects[ id ].id ] = {
+                name: projects[ id ].name,
+                description: projects[ id ].description
+            }
+        }
+        
+        return JSON.stringify( projectsResponse )
     },
     
     /**
@@ -168,6 +202,7 @@ Object.defineProperty( GitLabAPI, entryPoint, {
             process.stderr.write( 'usage: gla create name-of-repository visibility public token YOUR_ACCESS_TOKEN\n' )
             process.stderr.write( 'usage: gla delete id-project token YOUR_ACCESS_TOKEN\n' )
             process.stderr.write( 'usage: gla config global token YOUR_ACCESS_TOKEN\n' )
+            process.stderr.write( 'usage: gla get projects token YOUR_ACCESS_TOKEN\n' )
             process.stderr.write( 'you must specify create, delete or config' )
             process.exit( 1 )
         } )
@@ -205,6 +240,15 @@ Object.defineProperty( GitLabAPI, entryPoint, {
                 token: command.token,
             }
             response = await gitlab_api__.config( data )
+        }
+    
+    
+    
+        if ( command.get ) {
+            const data = {
+                token: command.token,
+            }
+            response = await gitlab_api__.get( data )
         }
         
         if ( !quite )
