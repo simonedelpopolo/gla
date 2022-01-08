@@ -5,5 +5,5 @@ package-lock.json
 assertions
 .eslintrc.json
 .eslintignore
-.gitlab-ci.yaml
+.gitlab-ci.yml
 .github
