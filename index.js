@@ -5,6 +5,10 @@ import { request } from 'https'
 import { access, mkdir, readFile, writeFile } from 'fs/promises'
 import { parse, property_value } from 'json-swiss-knife'
 
+/**
+ * @type {string[]}
+ * @private
+ */
 const gla_commands__ = [
     'create',
     'delete',
