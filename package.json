@@ -1,20 +1,11 @@
 {
   "name": "gla",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Some useful API for gitlab. Create, delete and list all ( owned ) projects. Javascript ESM module.",
   "type": "module",
   "engines": {
-    "node": ">=v16.13.1 <17",
-    "npm": "~8.3.0"
+    "node": ">=v16.14.0 <17"
   },
-  "os": [
-    "linux",
-    "darwin"
-  ],
-  "cpu": [
-    "x64",
-    "arm64"
-  ],
   "main": "index.js",
   "bin": {
     "gla": "./executable.js"
@@ -25,12 +16,12 @@
     "assertions": "cd ./assertions/ && node ./assertions.js"
   },
   "dependencies": {
-    "oftypes": "^0.2.2",
-    "json-swiss-knife": "^1.4.3"
+    "oftypes": "latest",
+    "json-swiss-knife": "latest"
   },
   "devDependencies": {
-    "eslint": "^8.4.1",
-    "eslint-plugin-jsdoc": "^37.2.2"
+    "eslint": "^8.11.0",
+    "eslint-plugin-jsdoc": "^38.0.5"
   },
   "publishConfig": {
     "access": "public"
