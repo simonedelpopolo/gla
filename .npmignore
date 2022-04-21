@@ -2,8 +2,9 @@ node_modules
 .idea
 package-lock.json
 .git
-assertions
+tests
 .eslintrc.json
 .eslintignore
 .gitlab-ci.yml
 .github
+.npmrc

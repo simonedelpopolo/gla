@@ -1,39 +1,28 @@
 {
   "name": "gla",
-  "version": "0.1.16",
-  "description": "Some useful API for gitlab. Create, delete and list all ( owned ) projects. Javascript ESM module.",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "description": "Some useful API for gitlab. Create, delete and list all ( owned ) projects. Javascript ESModule.",
   "type": "module",
-  "engines": {
-    "node": ">=v16.14.0 <17"
-  },
   "main": "index.js",
   "bin": {
-    "gla": "./executable.js"
+    "gla": "./gla.js"
+  },
+  "engines": {
+    "node": ">=v16.14.2 <17"
   },
   "scripts": {
-    "eslint": "npx eslint . --ext .js",
-    "eslint-fix": "npx eslint --fix . --ext .js",
-    "assertions": "cd ./assertions/ && node ./assertions.js"
-  },
-  "dependencies": {
-    "oftypes": "latest",
-    "json-swiss-knife": "latest"
+    "lint": "npx eslint . --ext .js",
+    "test": "npx 4t unit",
+    "coverage": "npx 4t --coverage unit"
   },
   "devDependencies": {
-    "eslint": "^8.11.0",
-    "eslint-plugin-jsdoc": "^38.0.5"
+    "eslint": "^8.13.0",
+    "eslint-plugin-jsdoc": "^39.2.7",
+    "trythistrythat": "^1.8.2"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://gitlab.com/simonedelpopolo/gla#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/simonedelpopolo/gla.git"
-  },
-  "bugs": {
-    "email": "simonedelpopolo@outlook.com",
-    "url": "https://gitlab.com/simonedelpopolo/gla/-/issues"
+  "dependencies": {
+    "json-swiss-knife": "^1.6.13"
   },
   "keywords": [
     "gitlab",
@@ -46,5 +35,13 @@
     "email": "simonedelpopolo@outlook.com",
     "url": "https://gitlab.com/simonedelpopolo"
   },
-  "license": "Apache-2.0"
+  "homepage": "https://gitlab.com/simonedelpopolo/gla#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/simonedelpopolo/gla.git"
+  },
+  "bugs": {
+    "email": "simonedelpopolo@outlook.com",
+    "url": "https://gitlab.com/simonedelpopolo/gla/-/issues"
+  }
 }

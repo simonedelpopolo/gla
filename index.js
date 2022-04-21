@@ -17,18 +17,18 @@ const gla_commands__ = [
 ]
 
 const gitlab_api__ = {
-    
+
     TOKEN: null,
-    
+
     getTOKEN: async () => {
         const accessCheck = await access( `${ homedir() }/.gla/config.json`, constants.F_OK | constants.R_OK ).catch( error => JSON.stringify( error ) )
         if ( typeof accessCheck === 'string' )
             return
-        
+
         const config = await parse( await readFile( `${ homedir() }/.gla/config.json` ) )
         gitlab_api__.TOKEN = config.token
     },
-    
+
     /**
      * The request to GitLab REST API.
      *
@@ -37,30 +37,30 @@ const gitlab_api__ = {
      * @returns {Promise | PromiseFulfilledResult<string>}
      */
     req: ( options, data = null ) => {
-        
+
         return new Promise( ( resolve ) => {
-            
+
             const outgoing = request( options, ( incoming ) => {
                 let chunks = []
-                
+
                 incoming.on( 'data', chunk => chunks.push( chunk ) )
-                
+
                 incoming.on( 'end', () => resolve( Buffer.concat( chunks ).toString() ) )
-                
+
                 incoming.on( 'error', function ( error ) {
                     process.stderr.write( error )
                     process.exit( 1 )
                 } )
             } )
-            
+
             if ( data !== null )
                 outgoing.write( JSON.stringify( data ) )
-            
+
             outgoing.end()
         } )
-        
+
     },
-    
+
     /**
      * GitLab REST API create project.
      *
@@ -69,10 +69,10 @@ const gitlab_api__ = {
      * @returns {Promise<string>}
      */
     create: async ( data ) => {
-        
+
         if ( gitlab_api__.TOKEN === null )
             gitlab_api__.TOKEN = data.token
-        
+
         const options = {
             method: 'POST',
             hostname: 'gitlab.com',
@@ -82,11 +82,11 @@ const gitlab_api__ = {
                 'Content-Type': 'application/json',
             },
         }
-        
+
         return gitlab_api__.req( options, data )
-        
+
     },
-    
+
     /**
      * GitLab REST API, list all projects.
      *
@@ -97,7 +97,7 @@ const gitlab_api__ = {
     get: async ( data ) => {
         if ( gitlab_api__.TOKEN === null )
             gitlab_api__.TOKEN = data.token
-    
+
         const options = {
             method: 'GET',
             hostname: 'gitlab.com',
@@ -106,9 +106,9 @@ const gitlab_api__ = {
                 'Authorization': `Bearer ${ gitlab_api__.TOKEN }`,
             },
         }
-        
+
         const projects = await parse( await gitlab_api__.req( options, data ) )
-        
+
         let projectsResponse = {}
         for ( const id in projects ) {
             projectsResponse[ projects[ id ].id ] = {
@@ -116,10 +116,10 @@ const gitlab_api__ = {
                 description: projects[ id ].description
             }
         }
-        
+
         return JSON.stringify( projectsResponse )
     },
-    
+
     /**
      * GitLab REST API delete project.
      *
@@ -128,10 +128,10 @@ const gitlab_api__ = {
      * @returns {Promise<string>}
      */
     delete: async ( data ) => {
-        
+
         if ( gitlab_api__.TOKEN === null )
             gitlab_api__.TOKEN = data.token
-        
+
         const options = {
             method: 'DELETE',
             hostname: 'gitlab.com',
@@ -141,11 +141,11 @@ const gitlab_api__ = {
                 'Content-Type': 'application/json',
             },
         }
-        
+
         return gitlab_api__.req( options )
-        
+
     },
-    
+
     /**
      * The gla global config.
      *
@@ -154,30 +154,30 @@ const gitlab_api__ = {
      */
     config: async ( data ) => {
         const accessCheck = await access( `${ homedir() }/.gla`, constants.F_OK | constants.X_OK ).catch( error => JSON.stringify( error ) )
-        
+
         if ( typeof accessCheck === 'string' ) {
-            
+
             const homeCheck = await access( `${ homedir() }`, constants.X_OK | constants.W_OK ).catch( error => JSON.stringify( error ) )
             if ( typeof homeCheck === 'string' )
                 return homeCheck
-            
+
             await mkdir( `${ homedir() }/.gla` )
         }
-        
+
         const saveJSON = {
             token: data.token,
         }
-        
+
         return writeFile( `${ homedir() }/.gla/config.json`, JSON.stringify( saveJSON ) )
             .then( () => JSON.stringify( { token: 'saved' } ) )
             .catch( error => JSON.stringify( error ) )
-        
+
     },
-    
+
     commands: ( argv ) => {
-        
+
         return new Promise( ( resolve, reject ) => {
-            
+
             if ( !gla_commands__.includes( argv ) )
                 reject( 'command not found' )
         } )
@@ -191,7 +191,7 @@ Object.defineProperty( GitLabAPI, entryPoint, {
     enumerable: true,
     configurable: false,
     writable: false,
-    
+
     /**
      * GitLab API shell.
      *
@@ -200,7 +200,7 @@ Object.defineProperty( GitLabAPI, entryPoint, {
      * @returns {string}
      */
     value: async function entryPoint( argv, quite = false ) {
-        
+
         gitlab_api__.commands( argv[ 0 ] ).catch( error => {
             process.stderr.write( `${ error }\n` )
             process.stderr.write( 'usage: gla create name-of-repository visibility public token YOUR_ACCESS_TOKEN\n' )
@@ -210,17 +210,17 @@ Object.defineProperty( GitLabAPI, entryPoint, {
             process.stderr.write( 'you must specify create, delete or config' )
             process.exit( 1 )
         } )
-        
+
         let command
         command = await property_value( argv, true )
-        
+
         if ( command instanceof SyntaxError ) {
             process.stderr.write( command.message )
             process.exit( 1 )
         }
-        
+
         await gitlab_api__.getTOKEN()
-        
+
         let response
         if ( command.create ) {
             const data = {
@@ -230,7 +230,7 @@ Object.defineProperty( GitLabAPI, entryPoint, {
             }
             response = await gitlab_api__.create( data )
         }
-        
+
         if ( command.delete ) {
             const data = {
                 id: command.delete,
@@ -238,26 +238,26 @@ Object.defineProperty( GitLabAPI, entryPoint, {
             }
             response = await gitlab_api__.delete( data )
         }
-        
+
         if ( command.config ) {
             const data = {
                 token: command.token,
             }
             response = await gitlab_api__.config( data )
         }
-    
-    
-    
+
+
+
         if ( command.get ) {
             const data = {
                 token: command.token,
             }
             response = await gitlab_api__.get( data )
         }
-        
+
         if ( !quite )
             console.log( await parse( response ) )
-        
+
         return response
     },
 } )
@@ -272,6 +272,6 @@ Object.freeze( GitLabAPI )
  * @returns {string}
  */
 export function gla( argv, quite = false ) {
-    
+
     return GitLabAPI[ entryPoint ]( argv, quite )
 }
